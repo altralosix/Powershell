@@ -15,7 +15,7 @@ ForEach-Object {
 }
 
 
-# Create an array
+# Create an array, help from https://www.reddit.com/r/PowerShell/comments/6onj65/custom_object_with_multiple_properties_and/
 $workstationOutput = @()
 ForEach ($Object in $wmiworkstations)
 {
@@ -26,6 +26,8 @@ ForEach ($Object in $wmiworkstations)
     $Row | Add-Member -MemberType NoteProperty -Name "Last Boot Time" -value $Object.ConvertToDateTime($Object.lastbootuptime)
     # Getting date and time Windows was installed
     $Row | Add-Member -MemberType NoteProperty -Name "Install Date" -value $Object.ConvertToDateTime($Object.installdate)
+    # Get free RAM and shorten to GB. -PassThru was key to getting the calculation to work for -value
+    $Row | Add-Member -MemberType NoteProperty -Name "Free RAM GB" -value ($Object.FreePhysicalMemory/1MB) -PassThru
 
     $workstationOutput += $Row
 }
