@@ -20,9 +20,10 @@ $workstationOutput = @()
 ForEach ($Object in $wmiworkstations)
 {
     $Row = New-Object psobject
+    # Adding each computer's hostname to array
     $Row | Add-Member -MemberType NoteProperty -Name "Hostname" -value $Object.csname
     # Getting last time computer boot up.  By adding $var.ConvertToDateTime($var.property) we can convert the values
-    $Row | Add-Member -MemberType NoteProperty -Name "LastBootTime" -value $Object.ConvertToDateTime($Object.lastbootuptime)
+    $Row | Add-Member -MemberType NoteProperty -Name "Last Boot Time" -value $Object.ConvertToDateTime($Object.lastbootuptime)
     # Getting date and time Windows was installed
     $Row | Add-Member -MemberType NoteProperty -Name "Install Date" -value $Object.ConvertToDateTime($Object.installdate)
 
